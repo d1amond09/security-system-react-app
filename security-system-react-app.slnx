@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="security-system-react-app/security-system-react-app.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>
