@@ -53,7 +53,10 @@ export default function ScannerPage() {
 
     const handleAnalyze = async (e) => {
         e.preventDefault();
-        setLoading(true); setError(null); setVulnerabilities([]);
+        setLoading(true);
+        setError(null);
+        setVulnerabilities([]);
+
         try {
             let res;
             if (activeTab === 'file') {
@@ -72,7 +75,8 @@ export default function ScannerPage() {
                     language: selectedLang === 'auto' ? 'csharp' : selectedLang
                 });
             }
-            setVulnerabilities(res.data);
+            console.log("Данные от ИИ:", res.data);
+            setVulnerabilities(res.data); 
         } catch (err) {
             setError(err.response?.data?.title || 'Ошибка при выполнении анализа. Попробуйте позже.');
         } finally {
@@ -81,9 +85,7 @@ export default function ScannerPage() {
     };
 
     const renderResults = () => {
-        if (loading || initialLoad) {
-            return null;
-        }
+        if (loading) return null;
 
         if (error) {
             return (
@@ -97,11 +99,11 @@ export default function ScannerPage() {
             );
         }
 
-        if (vulnerabilities.length > 0) {
+        if (vulnerabilities && vulnerabilities.length > 0) {
             return (
                 <div className="flex flex-col gap-8">
-                    {vulnerabilities.map((vuln) => (
-                        <VulnerabilityDetails key={vuln.id} vuln={vuln} />
+                    {vulnerabilities.map((vuln, idx) => (
+                        <VulnerabilityDetails key={idx} vuln={vuln} />
                     ))}
                 </div>
             );

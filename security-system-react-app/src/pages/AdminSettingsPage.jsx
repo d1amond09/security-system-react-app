@@ -9,7 +9,7 @@ export default function AdminSettingsPage() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        axiosInstance.get(`${SCANNER_API_URL}/settings/gemini`)
+        axiosInstance.get(`${SCANNER_API_URL}/settings/llm`)
             .then(res => setSettings(res.data))
             .finally(() => setLoading(false));
     }, []);
@@ -18,7 +18,7 @@ export default function AdminSettingsPage() {
         e.preventDefault();
         setSaving(true); setMessage('');
         try {
-            await axiosInstance.put(`${SCANNER_API_URL}/settings/gemini`, settings);
+            await axiosInstance.put(`${SCANNER_API_URL}/settings/llm`, settings);
             setMessage('Настройки успешно сохранены');
         } catch (err) {
             setMessage('Ошибка сохранения');
